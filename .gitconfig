@@ -1,0 +1,10 @@
+[alias]
+    # View abbreviated log
+    l = log --pretty=oneline -n 20 --graph --abbrev-commit
+[core]
+    pager = less -R
+[push]
+    default = simple
+[user]
+    name = andrewtweber
+    email = andrew@midwestscc.com
