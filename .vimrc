@@ -34,4 +34,7 @@ if has("autocmd")
 
     " Don't convert tabs to spaces in html and blade files
     autocmd BufRead,BufNewFile *.html,*.blade.php set noexpandtab
+
+    " Remember last open position
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
