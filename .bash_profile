@@ -9,3 +9,10 @@ export LESS="-x4"
 
 # Make every file I create group writeable
 umask g+w
+
+# Bash prompt
+source ~/.bash_prompt
+
+# Enable colors
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
