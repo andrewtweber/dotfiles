@@ -33,7 +33,7 @@ violet="\033[38;5;99m";
 white="\033[38;5;250m";
 
 # Set the terminal title to the current working directory.
-PS1="\[\033]0;\w\007\]";
+PS1="\[\033]0;\h: \w\007\]";
 PS1+="\[${yellow}\]\u"; # username
 PS1+="\[${white}\]@";
 PS1+="\[${green}\]\h"; # host
