@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Disable smooth scrolling
 defaults write NSGlobalDomain NSScrollAnimationEnabled -bool false
 
