@@ -27,13 +27,16 @@ if has("autocmd")
     filetype on
 
     " Highlight .json files as .js
-    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+    autocmd BufNewFile,BufRead *.json,*.vue setfiletype json syntax=javascript
 
     " Highlight .md files as Markdown
     autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 
-    " Don't convert tabs to spaces in html and blade files
-    autocmd BufRead,BufNewFile *.html,*.blade.php set noexpandtab
+    " Don't convert tabs to spaces in html, blade, and js files
+    autocmd BufRead,BufNewFile *.html,*.blade.php,*.js,*.vue set noexpandtab
+
+    " Highlight .env.example files as shell
+    autocmd BufNewFile,BufRead *.env.example setlocal filetype=sh
 
     " Remember last open position
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
