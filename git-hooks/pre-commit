@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cd ~/html/es/; ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer --config-file=code_sniffer.php_cs -vv fix app/; cd -;
