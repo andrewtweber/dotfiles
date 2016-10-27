@@ -12,7 +12,7 @@ cd ~/html/es/
 fixed=0
 
 for fn in $changed; do
-    if [[ $fn == app/* ]]; then
+    if [ -e "$fn" ] && [[ $fn == app/* ]]; then
         ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer --config-file=code_sniffer.php_cs --quiet fix $fn
         status=`echo $?`
 
