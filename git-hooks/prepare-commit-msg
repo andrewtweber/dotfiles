@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# If commit message contains "WIP", append "[skip ci]"
 if [[ `cat $1` =~ "WIP" ]];
 then
   echo "[skip ci]" >> $1;

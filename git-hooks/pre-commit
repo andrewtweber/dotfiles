@@ -4,6 +4,7 @@ green='\033[0;32m'
 red='\033[0;31m'
 nc='\033[0m'
 
+# Check which files have been added
 changed=`git diff --staged --name-only`
 changed=`echo $changed | tr '\n' ' '`
 
@@ -12,10 +13,13 @@ cd ~/html/es/
 fixed=0
 
 for fn in $changed; do
+    # If file exists and is in the app/ folder
     if [ -e "$fn" ] && [[ $fn == app/* ]]; then
+        # Run CS fixer
         ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer --config-file=code_sniffer.php_cs --quiet fix $fn
         status=`echo $?`
 
+        # Display status and re-add if fixed
         case $status in
             0) echo "  ${green}OK${nc}     $fn ";;
             1) echo "  ${red}fixed${nc}  $fn "; git add $fn; ((fixed++));;
@@ -24,6 +28,7 @@ for fn in $changed; do
     fi
 done
 
+# Change back to original directory
 cd - > /dev/null
 
 echo "";
