@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
     export TERM='gnome-256color';
 elif infocmp xterm-256color >/dev/null 2>&1; then
@@ -31,6 +33,7 @@ green="\033[38;5;35m";
 yellow="\033[38;5;227m";
 violet="\033[38;5;99m";
 white="\033[38;5;250m";
+red="\033[38;5;197m";
 
 # Set the terminal title to the current working directory.
 PS1="\[\033]0;\h: \w\007\]";
