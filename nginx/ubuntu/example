@@ -12,7 +12,7 @@ server {
 
     location / {
         try_files $uri $uri/ /index.php$is_args$args;
-        include   /etc/nginx/conf.d/php-fpm.conf;
+        include   /etc/nginx/conf.d/php-fpm;
     }
 
     error_page   500 502 503 504  /50x.html;
@@ -20,7 +20,7 @@ server {
         root   html;
     }
 
-    include /etc/nginx/conf.d/compression.conf;
+    include /etc/nginx/conf.d/compression;
 
     ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
