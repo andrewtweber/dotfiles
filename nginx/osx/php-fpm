@@ -6,4 +6,3 @@ location ~ \.php$ {
     fastcgi_param  QUERY_STRING    $query_string;
     include        fastcgi_params;
 }
-
