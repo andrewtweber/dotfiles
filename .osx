@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Disable Apache auto start
+sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
+
 # Disable smooth scrolling
 defaults write NSGlobalDomain NSScrollAnimationEnabled -bool false
 

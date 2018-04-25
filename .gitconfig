@@ -4,6 +4,7 @@
     # Undo the last commit
     undo-commit = reset --soft HEAD~
 [core]
+    editor = vim
     pager = less -R
     editor = vim
 [push]
