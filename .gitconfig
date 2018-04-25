@@ -1,10 +1,11 @@
 [alias]
-    # View abbreviated log
+    # View abbreviated SHA, description, and history graph of the latest 20 commits
     l = log --pretty=oneline -n 20 --graph --abbrev-commit
     # Undo the last commit
     undo-commit = reset --soft HEAD~
 [core]
     pager = less -R
+    editor = vim
 [push]
     default = simple
 [user]
