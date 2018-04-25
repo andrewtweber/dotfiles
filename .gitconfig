@@ -6,7 +6,6 @@
 [core]
     editor = vim
     pager = less -R
-    editor = vim
 [push]
     default = simple
 [user]
