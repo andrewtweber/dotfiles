@@ -7,7 +7,7 @@ syntax on
 " 4 spaces per tab, convert tabs to spaces
 set tabstop=4 shiftwidth=4 expandtab
 
-" allow moving cursor past end of line
+" allow moving cursor to true end of line
 set virtualedit=onemore
 
 " Show cursor position

@@ -22,6 +22,5 @@ source ~/.bash_prompt
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
-# Path for PHP7 (on Mac)
-export PATH="$(brew --prefix homebrew/php/php70)/bin:~/.npm/bin:$PATH"
+alias phpunit='./vendor/bin/phpunit'
 
