@@ -10,7 +10,7 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 # Search directories recursively, show colors
-export GREP_OPTIONS="--directories=recurse --color=auto"
+alias grep='grep --directories=recurse --color=auto'
 
 # Make every file I create group writeable
 umask g+w
