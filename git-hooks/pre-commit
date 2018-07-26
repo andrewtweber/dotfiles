@@ -15,14 +15,16 @@ fixed=0
 for fn in $changed; do
     # If file exists and is in the app/ folder
     if [ -e "$fn" ] && [[ $fn == app/* ]]; then
-        # Run CS fixer
-        ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer --config-file=code_sniffer.php_cs --quiet fix $fn
+        # Dry run to get status code
+        ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer --quiet --dry-run fix $fn
         status=`echo $?`
 
         # Display status and re-add if fixed
         case $status in
             0) echo "  ${green}OK${nc}     $fn ";;
-            1) echo "  ${red}fixed${nc}  $fn "; git add $fn; ((fixed++));;
+            8) echo "  ${red}fixed${nc}  $fn "
+                ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer --quiet fix $fn
+                git add $fn; ((fixed++));;
             *) echo "  ${red}UNKNOWN ERROR${nc}";;
         esac
     fi
@@ -32,6 +34,4 @@ done
 cd - > /dev/null
 
 echo "";
-
-#cd ~/html/es/; ./vendor/friendsofphp/php-cs-fixer/php-cs-fixer --config-file=code_sniffer.php_cs -vv fix app/; cd -;
 
