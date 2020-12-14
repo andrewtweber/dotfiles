@@ -22,5 +22,13 @@ source ~/.bash_prompt
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
+alias composer='php -d memory_limit=-1 /usr/local/bin/composer'
 alias phpunit='./vendor/bin/phpunit'
+
+# Docker
+export DOCKER_SYNC_STRATEGY=native_osx
+alias dsh='docker-compose exec web /sbin/setuser www-data /bin/bash'
+alias dss='docker-sync-stack'
+alias dc='docker-compose'
+alias dpull='docker pull sonarsoftware/sonar-base-develop:latest'
 

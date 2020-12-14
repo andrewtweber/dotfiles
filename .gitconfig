@@ -11,3 +11,5 @@
 [user]
     name = andrewtweber
     email = andrew@midwestscc.com
+[pull]
+    rebase = false

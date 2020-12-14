@@ -1,0 +1,37 @@
+#!/bin/sh
+
+green='\033[0;32m'
+red='\033[0;31m'
+nc='\033[0m'
+
+changed=`git diff --staged --name-only`
+changed=`echo $changed | tr '\n' ' '`
+
+gitroot=`git rev-parse --show-toplevel`
+cd "${gitroot}/sonar"
+
+fixed=0
+
+echo "Running CS fixer...\n"
+
+for fn in $changed; do
+    fn="${fn/sonar\//}"
+    if [ -e "$fn" ] && [[ $fn == app/* ]]; then
+        ./vendor/bin/phpcbf --standard=phpcs.xml -q $fn > /dev/null
+        status=`echo $?`
+
+        case $status in
+            0) echo "  ${green}OK${nc}     $fn ";;
+            1) echo "  ${red}fixed${nc}  $fn "; git add $fn; ((fixed++));;
+            *) echo "  ${red}UNKNOWN ERROR${nc}";;
+        esac
+    fi
+done
+
+plural=$([ "$fixed" == 1 ] && echo "" || echo "s")
+echo "\n ${fixed} file${plural} fixed and re-added"
+
+cd - > /dev/null
+
+echo "";
+
