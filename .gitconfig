@@ -4,12 +4,14 @@
     # Undo the last commit
     undo-commit = reset --soft HEAD~
 [core]
-    editor = vim
     pager = less -R
+    editor = vim
 [push]
     default = simple
 [user]
     name = andrewtweber
     email = andrew@midwestscc.com
 [pull]
-    rebase = false
+    rebase = true
+[rebase]
+    autosquash = true
