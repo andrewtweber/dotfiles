@@ -95,14 +95,11 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias brew86='arch -x86_64 brew'
 alias composer='php -d memory_limit=-1 /usr/local/bin/composer'
 alias phpunit='./vendor/bin/phpunit'
 alias a='php artisan'
 
+# git tab completion
 autoload -Uz compinit && compinit
