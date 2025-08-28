@@ -113,5 +113,5 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '%b '
 
 setopt PROMPT_SUBST
-PROMPT='%F{221}%n%f %F{white}@%f %F{197}*KINGKILLERS*%f %F{045}%1~%f %F{082}${vcs_info_msg_0_}%f$ '
+PROMPT='%F{221}%n%f %F{white}@%f %F{197}*%m*%f %F{045}%1~%f %F{082}${vcs_info_msg_0_}%f$ '
 
