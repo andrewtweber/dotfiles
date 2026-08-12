@@ -104,6 +104,9 @@ alias composer='php -d memory_limit=-1 /usr/local/bin/composer'
 alias phpunit='./vendor/bin/phpunit'
 alias a='php artisan'
 
+# Claude Code profiles (work / personal)
+[[ -f ~/.claude-profiles.zsh ]] && source ~/.claude-profiles.zsh
+
 # git tab completion
 autoload -Uz compinit && compinit
 
