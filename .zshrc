@@ -113,8 +113,13 @@ autoload -Uz compinit && compinit
 autoload -Uz vcs_info
 precmd() { vcs_info }
 
-zstyle ':vcs_info:git:*' formats '%b '
+zstyle ':vcs_info:git:*' formats '%F{white}git:(%F{082}%b%F{white})%f%m '
+zstyle ':vcs_info:git:*' actionformats '%F{white}git:(%F{082}%b|%a%F{white})%f%m '
+zstyle ':vcs_info:git*+set-message:*' hooks git-dirty
++vi-git-dirty() {
+  [[ -n $(command git status --porcelain 2>/dev/null) ]] && hook_com[misc]=' %F{220}✗%f'
+}
 
 setopt PROMPT_SUBST
-PROMPT='%F{221}%n%f %F{white}@%f %F{197}*%m*%f %F{045}%1~%f %F{082}${vcs_info_msg_0_}%f$ '
+PROMPT='%F{221}%n%f %F{white}@%f %F{197}*%M*%f %F{045}%1~%f %F{082}${vcs_info_msg_0_}%f$ '
 
