@@ -14,14 +14,58 @@ shopt -s nullglob
 
 base=`pwd`
 
+spinpid=""
+spinfile=""
+
+spinner() {
+    local frames=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
+    local i=0
+    local label=""
+    while :; do
+        read -r label < "$spinfile" 2>/dev/null
+        printf "\r\033[K  ${cyan}%s${reset} ${white}%s${reset}" "${frames[i++ % ${#frames[@]}]}" "$label"
+        sleep 0.08
+    done
+}
+
+startspinner() {
+    [ -t 1 ] || return
+    spinfile=`mktemp -t gitcheck`
+    printf "%s\n" "$1" > "$spinfile"
+    printf "\033[?25l"
+    spinner &
+    spinpid=$!
+}
+
+setspinner() {
+    [[ -n "$spinfile" ]] || return
+    printf "%s\n" "$1" > "$spinfile"
+}
+
+stopspinner() {
+    [[ -n "$spinpid" ]] || return
+    kill "$spinpid" 2>/dev/null
+    wait "$spinpid" 2>/dev/null
+    spinpid=""
+    rm -f "$spinfile"
+    spinfile=""
+    printf "\r\033[K\033[?25h"
+}
+
+trap 'stopspinner; exit 130' INT TERM
+
+startspinner "fetching remotes..."
+
 # refresh remote refs in parallel so the up-to-date check is accurate
+fetchpids=()
 for dir in "$base"/*/
 do
     if [ -d "$dir/.git" ]; then
         git -C "$dir" fetch --quiet >/dev/null 2>&1 &
+        fetchpids+=($!)
     fi
 done
-wait
+[[ ${#fetchpids[@]} -gt 0 ]] && wait "${fetchpids[@]}"
 
 names=()
 branches=()
@@ -42,6 +86,8 @@ do
     branchcolor="${black}"
 
     if [ -d .git ]; then
+        setspinner "checking $dir..."
+
         branch=`git rev-parse --abbrev-ref HEAD`
         if [[ "$branch" != "master" && "$branch" != "main" ]]; then
             branchcolor="${yellow}"
@@ -84,6 +130,8 @@ do
         [[ ${#status} -gt $statuswidth ]] && statuswidth=${#status}
     fi
 done
+
+stopspinner
 
 nameheader="Repo"
 branchheader="Branch"
