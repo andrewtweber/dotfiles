@@ -22,7 +22,7 @@ spinner() {
     local i=0
     local label=""
     while :; do
-        read -r label < "$spinfile" 2>/dev/null
+        read -r label 2>/dev/null < "$spinfile"
         printf "\r\033[K  ${cyan}%s${reset} ${white}%s${reset}" "${frames[i++ % ${#frames[@]}]}" "$label"
         sleep 0.08
     done
@@ -30,7 +30,7 @@ spinner() {
 
 startspinner() {
     [ -t 1 ] || return
-    spinfile=`mktemp -t gitcheck`
+    spinfile=`mktemp "${TMPDIR:-/tmp}/gitcheck.XXXXXX"` || return
     printf "%s\n" "$1" > "$spinfile"
     printf "\033[?25l"
     spinner &
