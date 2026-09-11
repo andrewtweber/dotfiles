@@ -23,7 +23,17 @@ do
 done
 wait
 
-printf "\n"
+names=()
+branches=()
+branchcolors=()
+statuses=()
+statuscolors=()
+remotestatuses=()
+remotecolors=()
+
+namewidth=0
+branchwidth=0
+statuswidth=0
 
 for dir in "$base"/*/
 do
@@ -59,8 +69,52 @@ do
             status="clean"
         fi
 
-        printf "  ${statuscolor}%-20s  ${reset}${branchcolor}%-14s${reset} ${statuscolor}%-7s${reset}        ${remotecolor}%s${reset}\n" "$dir" "[$branch]" "$status" "$remotestatus"
+        branch="[$branch]"
+
+        names+=("$dir")
+        branches+=("$branch")
+        branchcolors+=("$branchcolor")
+        statuses+=("$status")
+        statuscolors+=("$statuscolor")
+        remotestatuses+=("$remotestatus")
+        remotecolors+=("$remotecolor")
+
+        [[ ${#dir} -gt $namewidth ]] && namewidth=${#dir}
+        [[ ${#branch} -gt $branchwidth ]] && branchwidth=${#branch}
+        [[ ${#status} -gt $statuswidth ]] && statuswidth=${#status}
     fi
+done
+
+nameheader="Repo"
+branchheader="Branch"
+statusheader="Status"
+remoteheader="Remote"
+
+[[ ${#nameheader} -gt $namewidth ]] && namewidth=${#nameheader}
+[[ ${#branchheader} -gt $branchwidth ]] && branchwidth=${#branchheader}
+[[ ${#statusheader} -gt $statuswidth ]] && statuswidth=${#statusheader}
+
+printf "\n"
+
+printf "  ${white}%-*s${reset}    ${white}%-*s${reset}    ${white}%-*s${reset}    ${white}%s${reset}\n" \
+    "$namewidth" "$nameheader" \
+    "$branchwidth" "$branchheader" \
+    "$statuswidth" "$statusheader" \
+    "$remoteheader"
+
+printf "  ${black}%-*s${reset}    ${black}%-*s${reset}    ${black}%-*s${reset}    ${black}%s${reset}\n" \
+    "$namewidth" "$(printf '%*s' "$namewidth" '' | tr ' ' '-')" \
+    "$branchwidth" "$(printf '%*s' "$branchwidth" '' | tr ' ' '-')" \
+    "$statuswidth" "$(printf '%*s' "$statuswidth" '' | tr ' ' '-')" \
+    "$(printf '%*s' "${#remoteheader}" '' | tr ' ' '-')"
+
+for i in "${!names[@]}"
+do
+    printf "  ${statuscolors[$i]}%-*s${reset}    ${branchcolors[$i]}%-*s${reset}    ${statuscolors[$i]}%-*s${reset}    ${remotecolors[$i]}%s${reset}\n" \
+        "$namewidth" "${names[$i]}" \
+        "$branchwidth" "${branches[$i]}" \
+        "$statuswidth" "${statuses[$i]}" \
+        "${remotestatuses[$i]}"
 done
 
 printf "\n"
